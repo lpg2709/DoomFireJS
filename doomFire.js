@@ -1,5 +1,5 @@
 var w, h;
-var tamPixel = 5;
+var tamPixel;
 var mapa;
 var cnv = document.createElement("canvas");
 var ctx = cnv.getContext("2d");
@@ -21,15 +21,17 @@ var fireRGB = [
 
 
 function start() {
-    w = 80;
-    h = 80;
+    w = 100;
+    h = 100;
+    tamPixel = 5;
     cnv.width = w * tamPixel;
     cnv.height = h * tamPixel;
     cnv.style = "border: 1px solid black";
     initStruct();
     fireInit();
     var a = setInterval(fireLoop, 33.33);
-    console.log(fireRGB);
+    //render();
+    //console.log(fireRGB);
 }
 function initStruct() {
     mapa = new Array(w * h);
@@ -65,7 +67,7 @@ function render() {
         for (let j = 0; j < w; j++) {
             ctx.beginPath();
             ctx.rect(j * tamPixel, i * tamPixel, tamPixel, tamPixel);
-            ctx.fillStyle = fireRGB[mapa[i * w + j] - 1];
+            ctx.fillStyle = fireRGB[mapa[i * w + j]];
             ctx.fill();
             ctx.closePath();
         }

@@ -21,8 +21,8 @@ var fireRGB = [
 
 
 function start() {
-    w = 40;
-    h = 40;
+    w = 80;
+    h = 80;
     cnv.width = w * tamPixel;
     cnv.height = h * tamPixel;
     cnv.style = "border: 1px solid black";
@@ -35,22 +35,26 @@ function initStruct() {
     mapa = new Array(w * h);
     for (let i = 0; i < h; i++) {
         for (let j = 0; j < w; j++) {
-            mapa[i * 40 + j] = 0;
+            mapa[i * w + j] = 0;
         }
     }
 }
 function fireInit() {
-    var finalStruct = (w * h) - 40;
+    var finalStruct = (w * h) - w;
     for (let j = 0; j < h; j++) {
         mapa[finalStruct + j] = 36;
     }
 }
 function fireLoop() {
-    console.log("teste");
     for (let i = 0; i < h; i++) {
         for (let j = 0; j < w; j++) {
-            if (i != h - 1)
-                mapa[i * 40 + j] = (mapa[(i + 1) * 40 + j] - 1);
+            if (i != h - 1){
+                let fireIntensity = (mapa[(i + 1) * w + j] - Math.floor(Math.random()*3));
+                if(fireIntensity >= 0)
+                    mapa[i * w + j] = fireIntensity;
+                else
+                    mapa[i * w + j] = 0
+            }
         }
     }
     render();
@@ -61,7 +65,7 @@ function render() {
         for (let j = 0; j < w; j++) {
             ctx.beginPath();
             ctx.rect(j * tamPixel, i * tamPixel, tamPixel, tamPixel);
-            ctx.fillStyle = fireRGB[mapa[i * 40 + j] - 1];
+            ctx.fillStyle = fireRGB[mapa[i * w + j] - 1];
             ctx.fill();
             ctx.closePath();
         }
